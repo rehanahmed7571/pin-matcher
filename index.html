@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pin Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="pin-generator half-width">
+                    <input class="form-control" id="randomNumberDisplay" type="text">
+                    <button id="generateButton" onclick="getNumber()" class="generate-btn">Generate Pin</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-section half-width">
+                    <input class="form-control" id="calculatorDisplay" type="text">
+                    <div class="numbers">
+                        <div class="calc-body" id="disableMake">
+                            <div class="calc-button-row">
+                              <div class="button disableNumber" id=""onclick="document.getElementById('calculatorDisplay').value +='7',check() ">7</div>
+                              <div class="button disableNumber"  onclick="document.getElementById('calculatorDisplay').value +='8', check() ">8</div>
+                              <div class="button disableNumber"  onclick="document.getElementById('calculatorDisplay').value +='9' , check() ">9</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div class="button disableNumber"  onclick="document.getElementById('calculatorDisplay').value +='4' , check()">4</div>
+                              <div class="button disableNumber"  onclick="document.getElementById('calculatorDisplay').value +='5', check() ">5</div>
+                              <div class="button disableNumber" onclick="document.getElementById('calculatorDisplay').value +='6' , check()">6</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div class="button disableNumber"  onclick="document.getElementById('calculatorDisplay').value +='1', check() ">1</div>
+                              <div class="button disableNumber"  onclick="document.getElementById('calculatorDisplay').value +='2' , check()">2</div>
+                              <div class="button disableNumber"  onclick="document.getElementById('calculatorDisplay').value +='3' , check()">3</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div class="button"  onclick="back()">&lt;</div>
+                                <div class="button disableNumber"  onclick="document.getElementById('calculatorDisplay').value +='0' , check()">0</div>
+                                <div class="button"  onclick="document.getElementById('calculatorDisplay').value ='' ">C</div>
+                            </div>
+                            <div>
+                                <button type="submit" class="submit-btn" onclick="checkNumber();">Submit</button>
+                                <p class="action-left">3 try left</p>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="notify-section">
+            <p class="notify " id="notifyCross" >❌ Pin Didn't Match, Please try again</p>
+            <p class="notify " id="notifyRight">✅ Pin Matched... Secret door is opening for you</p>
+        </div>
+    </div>
+
+    <script>
+         document.getElementById('calculatorDisplay').value= '';
+         document.getElementById('randomNumberDisplay').value='';
+
+      function getNumber(){
+         
+            let tapButton = document.getElementById('generateButton')
+            let  randomNumber =Math.round( Math.random() * 10000) ;
+            if(randomNumber < 100){
+                randomNumber= randomNumber * 100;
+                document.getElementById('randomNumberDisplay').value=randomNumber;
+            }
+            else if(randomNumber < 1000){
+                randomNumber= randomNumber * 10;
+                document.getElementById('randomNumberDisplay').value=randomNumber;
+                
+            }else{
+                document.getElementById('randomNumberDisplay').value=randomNumber;
+            }
+             
+        };
+
+       
+
+            // back function 
+            function back(){
+                let chopping = document.getElementById('calculatorDisplay').value;
+                let nextHappened = chopping.slice(0,-1);
+                console.log(nextHappened);
+                document.getElementById('calculatorDisplay').value=nextHappened;
+            }
+            
+            // check amount of number
+            
+            function check(){
+                let amountNumber = document.getElementById('calculatorDisplay').value;
+                let takeNumber = amountNumber.length;
+           
+                if(takeNumber >= 4){
+                    let cols = document.querySelectorAll('.disableNumber');
+
+                    for(i = 0; i < cols.length; i++) {
+                            cols[i].style.pointerEvents="none";
+                        }
+                                        
+                }else{
+                    let cols = document.querySelectorAll('.disableNumber');
+
+                    for(i = 0; i < cols.length; i++) {
+                            cols[i].style.pointerEvents="auto";
+                        }
+                }
+            };
+            
+            
+
+
+
+
+            function checkNumber(){
+                let currentNumberRandom = document.getElementById('randomNumberDisplay').value;
+                let currentNumber = document.getElementById('calculatorDisplay').value;
+              
+                if (currentNumberRandom == currentNumber){
+                    document.getElementById('notifyRight').style.display="block";
+                    document.getElementById('notifyCross').style.display="none";
+                    
+                }else{
+                    document.getElementById('notifyCross').style.display="block";
+                    document.getElementById('notifyRight').style.display="none";
+                    
+                };
+
+            };
+
+    </script>
+
+
+
+
+</body>
+</html>
